@@ -1,4 +1,4 @@
-import rooms from './roomsResolver';
+import {rooms} from './roomsResolver';
 const data = [
   {
       id:2,
@@ -17,6 +17,6 @@ const data = [
 
 export const resolvers={
   Query:{
-      rooms:()=>data
+      rooms:()=>rooms
   }
 };

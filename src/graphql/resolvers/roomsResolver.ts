@@ -1,20 +1,5 @@
-const data = [
-  {
-      id:2,
-      id_hostal:1,
-      name:'hostalcabriales',
-      capacity:5,
-  },
-  {
-      id:3,
-      id_hostal:1,
-      name:'hostalcabriales',
-      capacity:5,
-  },
-];
+import {getAllRooms} from '../../bd/rooms'
 
-const rooms = function getRooms(){
-  return data;
+export const rooms = ()=>{
+  return getAllRooms;
 }
-  
-export default  rooms;
