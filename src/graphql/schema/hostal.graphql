@@ -1,0 +1,6 @@
+type Hostal {
+    id: Int!
+    name: String!
+    fullcapacity: String!
+    address:String!
+}

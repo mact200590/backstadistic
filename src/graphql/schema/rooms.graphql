@@ -1,0 +1,6 @@
+type Rooms {
+    id: Int!
+    id_hostal: Int!
+    name: String!
+    capacity: Int!
+}

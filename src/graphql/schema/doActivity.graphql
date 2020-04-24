@@ -1,0 +1,5 @@
+type DoActivity{
+    id_passport: String!
+    id_activity: Int!
+    price: Int!
+}

@@ -1,0 +1,16 @@
+#import * from './rooms.graphql'
+#import * from './activity.graphql'
+#import * from './customer.graphql'
+#import * from  './doActivity.graphql'
+#import * from  './hostal.graphql'
+
+type Query {
+    rooms:[Rooms]
+}
+
+type Rooms{
+    id:Int!
+    id_hostal:Int!
+    name:String!
+    capacity:Int!
+}
