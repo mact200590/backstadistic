@@ -3,14 +3,15 @@
 #import * from './customer.graphql'
 #import * from  './doActivity.graphql'
 #import * from  './hostal.graphql'
+#import * from './roomInput.graphql'
 
 type Query {
-    rooms:[Rooms]
+    rooms:[Rooms!]!
+    roomsId(id:Int):Rooms
+    hostals:[Hostal!]!
+    customers:[Customer!]!
 }
-
-type Rooms{
-    id:Int!
-    id_hostal:Int!
-    name:String!
-    capacity:Int!
+type Mutation {
+  RoomsInput(data: RoomsInput): ID!
+  #updatePlUser(data: PlUserDataUpdate, email: String!): ID!
 }

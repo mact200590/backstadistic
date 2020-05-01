@@ -1,5 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 export type Maybe<T> = T | null;
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -11,15 +12,21 @@ export type Scalars = {
 
 export type Query = {
    __typename?: 'Query';
-  rooms?: Maybe<Array<Maybe<Rooms>>>;
+  rooms: Array<Rooms>;
+  roomsId?: Maybe<Rooms>;
+};
+
+
+export type QueryRoomsIdArgs = {
+  id?: Maybe<Scalars['Int']>;
 };
 
 export type Rooms = {
    __typename?: 'Rooms';
-  capacity: Scalars['Int'];
   id: Scalars['Int'];
   id_hostal: Scalars['Int'];
   name: Scalars['String'];
+  capacity: Scalars['Int'];
 };
 
 
@@ -99,8 +106,8 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Query: ResolverTypeWrapper<{}>,
-  Rooms: ResolverTypeWrapper<Rooms>,
   Int: ResolverTypeWrapper<Scalars['Int']>,
+  Rooms: ResolverTypeWrapper<Rooms>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -108,19 +115,20 @@ export type ResolversParentTypes = {
   String: Scalars['String'],
   Boolean: Scalars['Boolean'],
   Query: {},
-  Rooms: Rooms,
   Int: Scalars['Int'],
+  Rooms: Rooms,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  rooms?: Resolver<Maybe<Array<Maybe<ResolversTypes['Rooms']>>>, ParentType, ContextType>,
+  rooms?: Resolver<Array<ResolversTypes['Rooms']>, ParentType, ContextType>,
+  roomsId?: Resolver<Maybe<ResolversTypes['Rooms']>, ParentType, ContextType, RequireFields<QueryRoomsIdArgs, never>>,
 };
 
 export type RoomsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Rooms'] = ResolversParentTypes['Rooms']> = {
-  capacity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   id_hostal?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  capacity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
