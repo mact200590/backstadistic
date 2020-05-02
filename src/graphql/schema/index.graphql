@@ -15,3 +15,4 @@ type Query {
 }
 type Mutation {
   roomsInput(id:Int, id_hostal: Int,name: String,capacity:Int):ID!
+}
