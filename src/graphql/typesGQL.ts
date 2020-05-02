@@ -12,13 +12,57 @@ export type Scalars = {
 
 export type Query = {
    __typename?: 'Query';
+  customers: Array<Customer>;
+  hostalId?: Maybe<Hostal>;
+  hostalLike?: Maybe<Hostal>;
+  hostals: Array<Hostal>;
   rooms: Array<Rooms>;
   roomsId?: Maybe<Rooms>;
 };
 
 
+export type QueryHostalIdArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryHostalLikeArgs = {
+  name?: Maybe<Scalars['String']>;
+};
+
+
 export type QueryRoomsIdArgs = {
   id?: Maybe<Scalars['Int']>;
+};
+
+export type Mutation = {
+   __typename?: 'Mutation';
+  roomsInput: Scalars['ID'];
+};
+
+
+export type MutationRoomsInputArgs = {
+  id?: Maybe<Scalars['Int']>;
+  id_hostal?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  capacity?: Maybe<Scalars['Int']>;
+};
+
+export type Customer = {
+   __typename?: 'Customer';
+  passport: Scalars['String'];
+  name: Scalars['String'];
+  age: Scalars['Int'];
+  country: Scalars['String'];
+  sexo: Scalars['String'];
+};
+
+export type Hostal = {
+   __typename?: 'Hostal';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  fullcapacity: Scalars['String'];
+  address: Scalars['String'];
 };
 
 export type Rooms = {
@@ -107,6 +151,10 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Query: ResolverTypeWrapper<{}>,
   Int: ResolverTypeWrapper<Scalars['Int']>,
+  Mutation: ResolverTypeWrapper<{}>,
+  ID: ResolverTypeWrapper<Scalars['ID']>,
+  Customer: ResolverTypeWrapper<Customer>,
+  Hostal: ResolverTypeWrapper<Hostal>,
   Rooms: ResolverTypeWrapper<Rooms>,
 };
 
@@ -116,12 +164,41 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'],
   Query: {},
   Int: Scalars['Int'],
+  Mutation: {},
+  ID: Scalars['ID'],
+  Customer: Customer,
+  Hostal: Hostal,
   Rooms: Rooms,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  customers?: Resolver<Array<ResolversTypes['Customer']>, ParentType, ContextType>,
+  hostalId?: Resolver<Maybe<ResolversTypes['Hostal']>, ParentType, ContextType, RequireFields<QueryHostalIdArgs, never>>,
+  hostalLike?: Resolver<Maybe<ResolversTypes['Hostal']>, ParentType, ContextType, RequireFields<QueryHostalLikeArgs, never>>,
+  hostals?: Resolver<Array<ResolversTypes['Hostal']>, ParentType, ContextType>,
   rooms?: Resolver<Array<ResolversTypes['Rooms']>, ParentType, ContextType>,
   roomsId?: Resolver<Maybe<ResolversTypes['Rooms']>, ParentType, ContextType, RequireFields<QueryRoomsIdArgs, never>>,
+};
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  roomsInput?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationRoomsInputArgs, never>>,
+};
+
+export type CustomerResolvers<ContextType = any, ParentType extends ResolversParentTypes['Customer'] = ResolversParentTypes['Customer']> = {
+  passport?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  age?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  country?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  sexo?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
+export type HostalResolvers<ContextType = any, ParentType extends ResolversParentTypes['Hostal'] = ResolversParentTypes['Hostal']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  fullcapacity?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  address?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type RoomsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Rooms'] = ResolversParentTypes['Rooms']> = {
@@ -134,6 +211,9 @@ export type RoomsResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>,
+  Mutation?: MutationResolvers<ContextType>,
+  Customer?: CustomerResolvers<ContextType>,
+  Hostal?: HostalResolvers<ContextType>,
   Rooms?: RoomsResolvers<ContextType>,
 };
 

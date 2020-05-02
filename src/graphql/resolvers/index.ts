@@ -1,5 +1,5 @@
 import { getAllRooms, getRoomsbyID, createRoom } from './roomsResolver';
-import { getAllHostals } from './hostalsResolver'
+import { getAllHostals, getHostalLike } from './hostalsResolver'
 import { getAllCustomers } from './customersResolver'
 
 export const resolvers = {
@@ -8,20 +8,23 @@ export const resolvers = {
       return getAllRooms(context.knex)
     },
     roomsId: async (parent, args, context, info) => {
-      return getRoomsbyID(context.knex, 2)
+      return getRoomsbyID(context.knex, args.id)
     },
     hostals: async (parent, args, context, info) => {
       return getAllHostals(context.knex)
     },
-    customers :async (parent, args, context, info) => {
+    customers: async (parent, args, context, info) => {
       return getAllCustomers(context.knex)
+    },
+    hostalLike: async (parent, args, context, info) => {
+      return getHostalLike(context.knex, args.name)
     }
   },
-  Mutation:{
-    RoomsInput: async (parent,args,context,info) => {
-       return await createRoom(context.knex,{id:10,id_hostal:1,name: 'room2',capacity:4});
-     },
-   }
+  Mutation: {
+    roomsInput: async (parent, args, context, info) => {
+      return await createRoom(context.knex, args.id, args.id_hostal, args.name, args.capacity);
+    },
+  }
 
 }
 

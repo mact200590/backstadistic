@@ -9,9 +9,9 @@ type Query {
     rooms:[Rooms!]!
     roomsId(id:Int):Rooms
     hostals:[Hostal!]!
+    hostalId(id:Int):Hostal
+    hostalLike(name:String):[Hostal]
     customers:[Customer!]!
 }
 type Mutation {
-  RoomsInput(data: RoomsInput): ID!
-  #updatePlUser(data: PlUserDataUpdate, email: String!): ID!
-}
+  roomsInput(id:Int, id_hostal: Int,name: String,capacity:Int):ID!

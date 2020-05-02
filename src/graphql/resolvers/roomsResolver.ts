@@ -1,6 +1,6 @@
 import * as Knex from 'knex'
 
-interface RoomsInterface {
+export interface RoomsInterface {
   id: number,
   id_hostal: number,
   name: String,
@@ -39,13 +39,13 @@ export const getRoomsbyID = (db: Knex, id: number) => {
     )
 }
 
-export const createRoom = (db: Knex, room: RoomsInterface) => {
+export const createRoom = (db: Knex,id:number, id_hostal: number,name: string,capacity:number) => {
   return db
     ('Rooms').insert({
-      id: room.id,
-      id_hostal: room.id_hostal,
-      name: room.name,
-      capacity: room.capacity
+      id: id,
+      id_hostal:id_hostal,
+      name: name,
+      capacity:capacity
     })
     .returning('id')
 }
