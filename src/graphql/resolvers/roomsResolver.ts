@@ -1,12 +1,5 @@
 import * as Knex from 'knex'
-
-export interface RoomsInterface {
-  id: number,
-  id_hostal: number,
-  name: String,
-  capacity: number
-}
-
+import {RoomsInput} from '../typesGQL'
 
 export const getAllRooms = (db: Knex) => {
   return db
@@ -38,18 +31,43 @@ export const getRoomsbyID = (db: Knex, id: number) => {
     }
     )
 }
-
-export const createRoom = (db: Knex,id:number, id_hostal: number,name: string,capacity:number) => {
+//TODO: Pass Unic Objet type somethin like this data:RoomInput,this object contains id, ..etc 
+export const createRoom = (db: Knex, data:RoomsInput) => {
+  console.log(`this is ok`,data)
   return db
     ('Rooms').insert({
-      id: id,
-      id_hostal:id_hostal,
-      name: name,
-      capacity:capacity
+      name: data.name,
+      capacity: data.capacity,
+      id_hostal: data.id_hostal
     })
-    .returning('id')
+    //.returning(['id_hostal'])
+    .then(result => {
+      console.log(`this`, result[0])
+      return result[0]
+    })
+
 }
 
+//TODO: Do the same with other object
+export const deleteRoom = (db: Knex, id: number) => {
+  return db
+    ('Rooms')
+    .where('id', id)
+    .del()
+}
 
-
-
+//TODO: Do the same with other object
+export const updateRoomByID = (db: Knex, id: number, id_hostal: number, name: string, capacity: number) => {
+  return db
+    ('Rooms')
+    .where('id', id)
+    .update({
+      id: id,
+      id_hostal: id_hostal,
+      name: name,
+      capacity: capacity
+    })
+    .then(result => {
+      console.log(`Success`)
+    })
+}

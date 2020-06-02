@@ -13,7 +13,6 @@ export const getAllCustomers = (db: Knex) => {
                     country: item.country,
                     sexo: item.sexo
                 }
-
             })
         })
 }

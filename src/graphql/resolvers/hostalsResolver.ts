@@ -15,7 +15,7 @@ export const getAllHostals = (db: Knex) => {
 }
 
 
-export const getAllHostalsID = (db: Knex, id: number) => {
+export const getHostalByID = (db: Knex, id: number) => {
     return db
         .select()
         .from('Hostal')
@@ -37,7 +37,6 @@ export const getHostalLike = (db: Knex, name: string) => {
         .from('Hostal')
         .where('name', 'like', `%${name}%`)
         .then(result => result.map(item => {
-            console.log(`this is`, result)
             return {
                 id: item.id,
                 address: item.address,

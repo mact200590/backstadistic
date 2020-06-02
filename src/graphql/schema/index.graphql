@@ -3,8 +3,6 @@
 #import * from './customer.graphql'
 #import * from  './doActivity.graphql'
 #import * from  './hostal.graphql'
-#import * from './roomInput.graphql'
-
 type Query {
     rooms:[Rooms!]!
     roomsId(id:Int):Rooms
@@ -14,5 +12,7 @@ type Query {
     customers:[Customer!]!
 }
 type Mutation {
-  roomsInput(id:Int, id_hostal: Int,name: String,capacity:Int):ID!
+  roomsInput(data:RoomsInput):Rooms!
+  roomsDelete(id:Int!):ID!
+  roomUpdate(id:Int!, id_hostal: Int,name: String,capacity:Int):ID! 
 }
