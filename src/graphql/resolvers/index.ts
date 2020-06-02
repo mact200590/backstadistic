@@ -1,4 +1,4 @@
-import { getAllRooms, getRoomsbyID, createRoom, deleteRoom, updateRoomByID } from './roomsResolver';
+import { getAllRooms, getRoomsbyID, createRoom, deleteRoom, updateRoom } from './roomsResolver';
 import { getAllHostals, getHostalLike,getHostalByID } from './hostalsResolver'
 import { getAllCustomers } from './customersResolver'
 
@@ -32,7 +32,7 @@ export const resolvers = {
       return deleteRoom(context.knex, args.id)
     },
     roomUpdate: async (parent, args, context, info) => {
-      return updateRoomByID(context.knex, args.id, args.id_hostal, args.name, args.capacity)
+      return updateRoom(context.knex, args.data)
     }
 
   }

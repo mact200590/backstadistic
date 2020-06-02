@@ -14,5 +14,5 @@ type Query {
 type Mutation {
   roomsInput(data:RoomsInput):Rooms!
   roomsDelete(id:Int!):ID!
-  roomUpdate(id:Int!, id_hostal: Int,name: String,capacity:Int):ID! 
+  roomUpdate(data:RoomsInput):Rooms! 
 }

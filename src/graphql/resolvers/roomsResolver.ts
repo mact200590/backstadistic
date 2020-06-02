@@ -31,7 +31,7 @@ export const getRoomsbyID = (db: Knex, id: number) => {
     }
     )
 }
-//TODO: Pass Unic Objet type somethin like this data:RoomInput,this object contains id, ..etc 
+//TODO: Refact the handle error here
 export const createRoom = (db: Knex, data:RoomsInput) => {
   console.log(`this is ok`,data)
   return db
@@ -40,15 +40,16 @@ export const createRoom = (db: Knex, data:RoomsInput) => {
       capacity: data.capacity,
       id_hostal: data.id_hostal
     })
-    //.returning(['id_hostal'])
-    .then(result => {
-      console.log(`this`, result[0])
-      return result[0]
+    .then(() => {
+      return data
+    })
+    .catch((error)=>{
+      console.log(`Something was wrong`,error)
     })
 
 }
 
-//TODO: Do the same with other object
+//TODO: Fix, this there is not id, anymore the query have to be with name rooms and id hostal
 export const deleteRoom = (db: Knex, id: number) => {
   return db
     ('Rooms')
@@ -57,17 +58,21 @@ export const deleteRoom = (db: Knex, id: number) => {
 }
 
 //TODO: Do the same with other object
-export const updateRoomByID = (db: Knex, id: number, id_hostal: number, name: string, capacity: number) => {
+export const updateRoom = (db: Knex, data:RoomsInput) => {
   return db
     ('Rooms')
-    .where('id', id)
-    .update({
-      id: id,
-      id_hostal: id_hostal,
-      name: name,
-      capacity: capacity
+    .where({
+      'name': data.name,
+      'id_hostal':data.id_hostal
     })
-    .then(result => {
+    .update({
+      capacity: data.capacity
+    })
+    .then(() => {
       console.log(`Success`)
+      return data
+    })
+    .catch(error=>{
+      console.log(`Error`,error)
     })
 }
