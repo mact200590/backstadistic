@@ -1,5 +1,5 @@
-import { getAllRooms, getRoomsbyID, createRoom } from './roomsResolver';
-import { getAllHostals, getHostalLike } from './hostalsResolver'
+import { getAllRooms, getRoomsbyID, createRoom, deleteRoom, updateRoomByID } from './roomsResolver';
+import { getAllHostals, getHostalLike,getHostalByID } from './hostalsResolver'
 import { getAllCustomers } from './customersResolver'
 
 export const resolvers = {
@@ -13,19 +13,27 @@ export const resolvers = {
     hostals: async (parent, args, context, info) => {
       return getAllHostals(context.knex)
     },
-    customers: async (parent, args, context, info) => {
-      return getAllCustomers(context.knex)
+    hostalId: async (parent, args, context, info) => {
+      return getHostalByID(context.knex,args.id)
     },
     hostalLike: async (parent, args, context, info) => {
       return getHostalLike(context.knex, args.name)
+    },
+    customers: async (parent, args, context, info) => {
+      return getAllCustomers(context.knex)
     }
   },
   Mutation: {
     roomsInput: async (parent, args, context, info) => {
-      return await createRoom(context.knex, args.id, args.id_hostal, args.name, args.capacity);
+      console.log(`this is `,args.data)
+     return await createRoom(context.knex ,args.data);
     },
+    roomsDelete: async (parent, args, context, info) => {
+      return deleteRoom(context.knex, args.id)
+    },
+    roomUpdate: async (parent, args, context, info) => {
+      return updateRoomByID(context.knex, args.id, args.id_hostal, args.name, args.capacity)
+    }
+
   }
-
 }
-
-

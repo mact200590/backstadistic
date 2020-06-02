@@ -14,7 +14,7 @@ export type Query = {
    __typename?: 'Query';
   customers: Array<Customer>;
   hostalId?: Maybe<Hostal>;
-  hostalLike?: Maybe<Hostal>;
+  hostalLike?: Maybe<Array<Maybe<Hostal>>>;
   hostals: Array<Hostal>;
   rooms: Array<Rooms>;
   roomsId?: Maybe<Rooms>;
@@ -37,15 +37,27 @@ export type QueryRoomsIdArgs = {
 
 export type Mutation = {
    __typename?: 'Mutation';
-  roomsInput: Scalars['ID'];
+  roomUpdate: Scalars['ID'];
+  roomsDelete: Scalars['ID'];
+  roomsInput: Rooms;
+};
+
+
+export type MutationRoomUpdateArgs = {
+  id: Scalars['Int'];
+  id_hostal?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  capacity?: Maybe<Scalars['Int']>;
+};
+
+
+export type MutationRoomsDeleteArgs = {
+  id: Scalars['Int'];
 };
 
 
 export type MutationRoomsInputArgs = {
-  id?: Maybe<Scalars['Int']>;
-  id_hostal?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  capacity?: Maybe<Scalars['Int']>;
+  data?: Maybe<RoomsInput>;
 };
 
 export type Customer = {
@@ -67,10 +79,15 @@ export type Hostal = {
 
 export type Rooms = {
    __typename?: 'Rooms';
-  id: Scalars['Int'];
-  id_hostal: Scalars['Int'];
   name: Scalars['String'];
   capacity: Scalars['Int'];
+  id_hostal: Scalars['Int'];
+};
+
+export type RoomsInput = {
+  name: Scalars['String'];
+  capacity: Scalars['Int'];
+  id_hostal: Scalars['Int'];
 };
 
 
@@ -156,6 +173,7 @@ export type ResolversTypes = {
   Customer: ResolverTypeWrapper<Customer>,
   Hostal: ResolverTypeWrapper<Hostal>,
   Rooms: ResolverTypeWrapper<Rooms>,
+  RoomsInput: RoomsInput,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -169,19 +187,22 @@ export type ResolversParentTypes = {
   Customer: Customer,
   Hostal: Hostal,
   Rooms: Rooms,
+  RoomsInput: RoomsInput,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   customers?: Resolver<Array<ResolversTypes['Customer']>, ParentType, ContextType>,
   hostalId?: Resolver<Maybe<ResolversTypes['Hostal']>, ParentType, ContextType, RequireFields<QueryHostalIdArgs, never>>,
-  hostalLike?: Resolver<Maybe<ResolversTypes['Hostal']>, ParentType, ContextType, RequireFields<QueryHostalLikeArgs, never>>,
+  hostalLike?: Resolver<Maybe<Array<Maybe<ResolversTypes['Hostal']>>>, ParentType, ContextType, RequireFields<QueryHostalLikeArgs, never>>,
   hostals?: Resolver<Array<ResolversTypes['Hostal']>, ParentType, ContextType>,
   rooms?: Resolver<Array<ResolversTypes['Rooms']>, ParentType, ContextType>,
   roomsId?: Resolver<Maybe<ResolversTypes['Rooms']>, ParentType, ContextType, RequireFields<QueryRoomsIdArgs, never>>,
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  roomsInput?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationRoomsInputArgs, never>>,
+  roomUpdate?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationRoomUpdateArgs, 'id'>>,
+  roomsDelete?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationRoomsDeleteArgs, 'id'>>,
+  roomsInput?: Resolver<ResolversTypes['Rooms'], ParentType, ContextType, RequireFields<MutationRoomsInputArgs, never>>,
 };
 
 export type CustomerResolvers<ContextType = any, ParentType extends ResolversParentTypes['Customer'] = ResolversParentTypes['Customer']> = {
@@ -202,10 +223,9 @@ export type HostalResolvers<ContextType = any, ParentType extends ResolversParen
 };
 
 export type RoomsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Rooms'] = ResolversParentTypes['Rooms']> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
-  id_hostal?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   capacity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  id_hostal?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
